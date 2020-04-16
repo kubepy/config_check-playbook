@@ -1,0 +1,55 @@
+---
+# defaults file for config_modify
+stop_service:
+  - vsftpd
+  - apmd
+  - autofs
+  - avahi-daemon
+  - bluetooth
+  - cups
+  - hidd
+  - hplip
+  - innd
+  - irda
+  - isdn
+  - krb5-telnet
+  - mdmonitor
+  - netfs
+  - nfslock
+  - pcscd
+  - portmap
+  - rhnsf
+  - rpcgssd
+  - rpcidmapd
+  - sendmail
+  - yum-updatesd
+  - eklogin
+  - ekrb5-telnet
+  - gssftp
+  - klogin
+  - krb5-telnet
+  - kshell
+  - ktalk
+  - rsync
+
+file_permissions:
+  - file: /etc/passwd
+    mode: 644
+  - file: /etc/group
+    mode: 644
+  - file: /etc/exports
+    mode: 644
+  - file: /etc/issue
+    mode: 644
+  - file: /var/log/wtmp
+    mode: 644
+  - file: /etc/services
+    mode: 644
+  - file: /etc/hosts.deny
+    mode: 644
+  - file: /etc/securetty
+    mode: 600
+  - file: /etc/ssh/sshd_config
+    mode: 600
+  - file: /var/log/messages
+    mode: 600

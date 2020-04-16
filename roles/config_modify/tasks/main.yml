@@ -1,0 +1,94 @@
+---
+# tasks file for config_modify
+# created on 2020/4/16
+- name: Disable the following service, and ensure the state is stopped
+  service:
+    name: "{{ item }}"
+    enabled: no
+    state: stopped
+  with_items: "{{ stop_service }}"
+  ignore_errors: yes
+  failed_when: false
+
+- block:
+  - name: RHEL6 - Insert a new rule 'pam_pwhistory.so' with argument 'use_authtok remember=5 enforce_for_root' after an existing rule 'pam_cracklib.so'
+    pamd:
+      name: system-auth-ac
+      type: password
+      control: requisite
+      module_path: pam_cracklib.so
+      new_type: password
+      new_control: required
+      new_module_path: pam_pwhistory.so
+      module_arguments: 'use_authtok remember=5 enforce_for_root'
+      state: after
+
+  - name: RHEL6 - Replace an existing rule 'pam_cracklib.so' with argument 'try_first_pass retry=5 minlen=8 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1 enforce_for_root'
+    pamd:
+      name: system-auth-ac
+      type: password
+      control: requisite
+      module_path: pam_cracklib.so
+      module_arguments: 'try_first_pass retry=5 minlen=8 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1 enforce_for_root'
+      state: updated
+  when: ansible_distribution_major_version == '6'
+
+- block:
+  - name: RHEL7 - Insert a new rule 'pam_pwhistory.so' with argument 'use_authtok remember=5 enforce_for_root' after an existing rule 'pam_pwquality.so'
+    pamd:
+      name: system-auth-ac
+      type: password
+      control: requisite
+      module_path: pam_pwquality.so
+      new_type: password
+      new_control: required
+      new_module_path: pam_pwhistory.so
+      module_arguments: 'use_authtok remember=5 enforce_for_root'
+      state: after
+  
+  - name: RHEL7 - Replace an existing rule 'pam_pwquality.so' with argument 'try_first_pass local_users_only retry=5 minlen=8 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1 enforce_for_root authtok_type='
+    pamd:
+      name: system-auth-ac
+      type: password
+      control: requisite
+      module_path: pam_pwquality.so
+      module_arguments: 'try_first_pass local_users_only retry=5 minlen=8 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1 enforce_for_root authtok_type='
+      state: updated
+  when: ansible_distribution_major_version == '7' 
+
+- name: Insert a new rule 'pam_tally2.so' with argument 'onerr=fail deny=5 unlock_time=900 even_deny_root root_unlock_time=900' after an existing rule 'pam_pwquality.so'
+  pamd:
+    name: "{{ item }}"
+    type: auth
+    control: required
+    module_path: pam_env.so
+    new_type: auth
+    new_control: required
+    new_module_path: pam_tally2.so
+    module_arguments: 'onerr=fail deny=5 unlock_time=900 even_deny_root root_unlock_time=900'
+    state: after
+  with_items:
+    - system-auth-ac
+    - password-auth-ac
+
+- name: Insert a new rule 'pam_tally2.so' without argument before an existing rule 'pam_unix.so'
+  pamd:
+    name: "{{ item }}"
+    type: account
+    control: required
+    module_path: pam_unix.so
+    new_type: account
+    new_control: required
+    new_module_path: pam_tally2.so
+    module_arguments: ''
+    state: before
+  with_items:
+    - system-auth-ac
+    - password-auth-ac
+
+- name: Ensure the following files permissions is corrrect
+  file:
+    path: "{{ item.file }}"
+    state: touch
+    mode: "{{ item.mode }}"
+  with_items: "{{ file_permissions }}"

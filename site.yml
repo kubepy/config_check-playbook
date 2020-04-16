@@ -1,0 +1,9 @@
+- hosts: all
+  gather_facts: false
+  become: true
+  pre_tasks:
+    - name: Gather facts for the distribution 
+      setup:
+        filter: ansible_distribution_major_version
+  roles:
+    - { role: config_modify }
