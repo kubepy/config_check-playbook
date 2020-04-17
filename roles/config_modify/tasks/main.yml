@@ -13,7 +13,7 @@
 - block:
   - name: RHEL6 - Insert a new rule 'pam_pwhistory.so' with argument 'use_authtok remember=5 enforce_for_root' after an existing rule 'pam_cracklib.so'
     pamd:
-      name: system-auth-ac
+      name: system-auth
       type: password
       control: requisite
       module_path: pam_cracklib.so
@@ -25,7 +25,7 @@
 
   - name: RHEL6 - Replace an existing rule 'pam_cracklib.so' with argument 'try_first_pass retry=5 minlen=8 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1 enforce_for_root'
     pamd:
-      name: system-auth-ac
+      name: system-auth
       type: password
       control: requisite
       module_path: pam_cracklib.so
@@ -36,7 +36,7 @@
 - block:
   - name: RHEL7 - Insert a new rule 'pam_pwhistory.so' with argument 'use_authtok remember=5 enforce_for_root' after an existing rule 'pam_pwquality.so'
     pamd:
-      name: system-auth-ac
+      name: system-auth
       type: password
       control: requisite
       module_path: pam_pwquality.so
@@ -48,7 +48,7 @@
   
   - name: RHEL7 - Replace an existing rule 'pam_pwquality.so' with argument 'try_first_pass local_users_only retry=5 minlen=8 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1 enforce_for_root authtok_type='
     pamd:
-      name: system-auth-ac
+      name: system-auth
       type: password
       control: requisite
       module_path: pam_pwquality.so
@@ -68,8 +68,8 @@
     module_arguments: 'onerr=fail deny=5 unlock_time=900 even_deny_root root_unlock_time=900'
     state: after
   with_items:
-    - system-auth-ac
-    - password-auth-ac
+    - system-auth
+    - password-auth
 
 - name: Insert a new rule 'pam_tally2.so' without argument before an existing rule 'pam_unix.so'
   pamd:
@@ -83,8 +83,8 @@
     module_arguments: ''
     state: before
   with_items:
-    - system-auth-ac
-    - password-auth-ac
+    - system-auth
+    - password-auth
 
 - name: Ensure the following files permissions is corrrect
   file:

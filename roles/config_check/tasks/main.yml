@@ -212,46 +212,46 @@
     "serviceStatus_rsync": "{{ serviceStatus_rsync | combine({'expect':'Service rsync status stop or Not Installed', 'tag':'systemctl stop/disable rsync | chkconfig rsync off'})}}"
 
 - name: Check pam_pw_hist [pam_pw_hist] config
-  shell: if [ -n "`uname -r|grep el7 &> /dev/null && grep -E '^password[[:space:]]+required[[:space:]]+pam_pwhistory.so[[:space:]]+use_authtok[[:space:]]+remember=5[[:space:]]+enforce_for_root$' /etc/pam.d/system-auth-ac`" ];then echo 'Passed';elif [ -n "`uname -r|grep el6 &> /dev/null && grep -E '^password[[:space:]]+required[[:space:]]+pam_pwhistory.so[[:space:]]+use_authtok[[:space:]]+remember=5[[:space:]]+enforce_for_root$' /etc/pam.d/system-auth-ac`" ]; then  echo 'Passed'; else echo failed; fi
+  shell: if [ -n "`uname -r|grep el7 &> /dev/null && grep -E '^password[[:space:]]+required[[:space:]]+pam_pwhistory.so[[:space:]]+use_authtok[[:space:]]+remember=5[[:space:]]+enforce_for_root$' /etc/pam.d/system-auth`" ];then echo 'Passed';elif [ -n "`uname -r|grep el6 &> /dev/null && grep -E '^password[[:space:]]+required[[:space:]]+pam_pwhistory.so[[:space:]]+use_authtok[[:space:]]+remember=5[[:space:]]+enforce_for_root$' /etc/pam.d/system-auth`" ]; then  echo 'Passed'; else echo failed; fi
   changed_when: False
   register: pam_pw_hist
 - set_fact:
     pam_pw_hist : "{{ pam_pw_hist | combine({'expect':'Set password history policy', 'tag':'Set password history policy'})}}"
 
 - name: Check pam_pw_complex [pam_pass_complex] config
-  shell: if [ -n "`uname -r|grep el7 &> /dev/null && grep -E '^password[[:space:]]+requisite[[:space:]]+pam_pwquality.so[[:space:]]+try_first_pass[[:space:]]+local_users_only[[:space:]]+retry=5[[:space:]]+minlen=8[[:space:]]+dcredit=-1[[:space:]]+ucredit=-1[[:space:]]+ocredit=-1[[:space:]]+lcredit=-1[[:space:]]+enforce_for_root[[:space:]]+authtok_type=$' /etc/pam.d/system-auth-ac`" ];then echo 'Passed';elif [ -n "`uname -r|grep el6 &> /dev/null && grep -E '^password[[:space:]]+required[[:space:]]+pam_cracklib.so[[:space:]]+try_first_pass[[:space:]]+retry=5[[:space:]]+minlen=8[[:space:]]+dcredit=-1[[:space:]]+ucredit=-1[[:space:]]+ocredit=-1[[:space:]]+lcredit=-1[[:space:]]+enforce_for_root$' /etc/pam.d/system-auth-ac`" ]; then  echo 'Passed'; else echo failed; fi
+  shell: if [ -n "`uname -r|grep el7 &> /dev/null && grep -E '^password[[:space:]]+requisite[[:space:]]+pam_pwquality.so[[:space:]]+try_first_pass[[:space:]]+local_users_only[[:space:]]+retry=5[[:space:]]+minlen=8[[:space:]]+dcredit=-1[[:space:]]+ucredit=-1[[:space:]]+ocredit=-1[[:space:]]+lcredit=-1[[:space:]]+enforce_for_root[[:space:]]+authtok_type=$' /etc/pam.d/system-auth`" ];then echo 'Passed';elif [ -n "`uname -r|grep el6 &> /dev/null && grep -E '^password[[:space:]]+required[[:space:]]+pam_cracklib.so[[:space:]]+try_first_pass[[:space:]]+retry=5[[:space:]]+minlen=8[[:space:]]+dcredit=-1[[:space:]]+ucredit=-1[[:space:]]+ocredit=-1[[:space:]]+lcredit=-1[[:space:]]+enforce_for_root$' /etc/pam.d/system-auth`" ]; then  echo 'Passed'; else echo failed; fi
   changed_when: False
   register: pam_pw_complex
 - set_fact:
     pam_pw_complex : "{{ pam_pw_complex | combine({'expect':'Set password complex policy', 'tag':'Set password complex policy'})}}"
 
-- name: Check incorrect password retry [systemauth_pam_tally] config for /etc/pam.d/system-auth-ac
-  shell: if [ -n "`grep -E '^auth[[:space:]]+required[[:space:]]+ pam_tally2.so[[:space:]]+onerr=fail[[:space:]]+deny=5[[:space:]]+unlock_time=900[[:space:]]+even_deny_root[[:space:]]+root_unlock_time=900$' /etc/pam.d/system-auth-ac`" ];then echo 'Passed';else echo 'Failure';fi
+- name: Check incorrect password retry [systemauth_pam_tally] config for /etc/pam.d/system-auth
+  shell: if [ -n "`grep -E '^auth[[:space:]]+required[[:space:]]+ pam_tally2.so[[:space:]]+onerr=fail[[:space:]]+deny=5[[:space:]]+unlock_time=900[[:space:]]+even_deny_root[[:space:]]+root_unlock_time=900$' /etc/pam.d/system-auth`" ];then echo 'Passed';else echo 'Failure';fi
   changed_when: False
   register: systemauth_pam_tally1
 - set_fact:
-    systemauth_pam_tally1: "{{ systemauth_pam_tally1 | combine({'expect':'auth required pam_tally2.so onerr=fail deny=5 unlock_time=900 even_deny_root root_unlock_time=900', 'tag':'restore /etc/pam.d/system-auth-ac config'})}}"
+    systemauth_pam_tally1: "{{ systemauth_pam_tally1 | combine({'expect':'auth required pam_tally2.so onerr=fail deny=5 unlock_time=900 even_deny_root root_unlock_time=900', 'tag':'restore /etc/pam.d/system-auth config'})}}"
 
-- name: Check incorrect password retry [systemauth_pam_tally] config for /etc/pam.d/system-auth-ac
-  shell: if [ -n "`grep -E '^account[[:space:]]+required[[:space:]]+ pam_tally2.so$' /etc/pam.d/system-auth-ac`" ];then echo 'Passed';else echo 'Failure';fi
+- name: Check incorrect password retry [systemauth_pam_tally] config for /etc/pam.d/system-auth
+  shell: if [ -n "`grep -E '^account[[:space:]]+required[[:space:]]+ pam_tally2.so$' /etc/pam.d/system-auth`" ];then echo 'Passed';else echo 'Failure';fi
   changed_when: False
   register: systemauth_pam_tally2
 - set_fact:
-    systemauth_pam_tally2: "{{ systemauth_pam_tally2 | combine({'expect':'account required pam_tally2.so', 'tag':'restore /etc/pam.d/system-auth-ac config'})}}"
+    systemauth_pam_tally2: "{{ systemauth_pam_tally2 | combine({'expect':'account required pam_tally2.so', 'tag':'restore /etc/pam.d/system-auth config'})}}"
 
-- name: Check incorrect password retry [passwordauth_pam_tally] config for /etc/pam.d/password-auth-ac
-  shell: if [ -n "`grep -E '^auth[[:space:]]+required[[:space:]]+ pam_tally2.so[[:space:]]+onerr=fail[[:space:]]+deny=5[[:space:]]+unlock_time=900[[:space:]]+even_deny_root[[:space:]]+root_unlock_time=900$' /etc/pam.d/password-auth-ac`" ];then echo 'Passed';else echo 'Failure';fi
+- name: Check incorrect password retry [passwordauth_pam_tally] config for /etc/pam.d/password-auth
+  shell: if [ -n "`grep -E '^auth[[:space:]]+required[[:space:]]+ pam_tally2.so[[:space:]]+onerr=fail[[:space:]]+deny=5[[:space:]]+unlock_time=900[[:space:]]+even_deny_root[[:space:]]+root_unlock_time=900$' /etc/pam.d/password-auth`" ];then echo 'Passed';else echo 'Failure';fi
   changed_when: False
   register: passwordauth_pam_tally1
 - set_fact:
-    passwordauth_pam_tally1: "{{ passwordauth_pam_tally1 | combine({'expect':'auth required pam_tally2.so onerr=fail deny=5 unlock_time=900 even_deny_root root_unlock_time=900', 'tag':'restore /etc/pam.d/password-auth-ac config'})}}"
+    passwordauth_pam_tally1: "{{ passwordauth_pam_tally1 | combine({'expect':'auth required pam_tally2.so onerr=fail deny=5 unlock_time=900 even_deny_root root_unlock_time=900', 'tag':'restore /etc/pam.d/password-auth config'})}}"
 
-- name: Check incorrect password retry [systemauth_pam_tally] config for /etc/pam.d/system-auth-ac
-  shell: if [ -n "`grep -E '^account[[:space:]]+required[[:space:]]+ pam_tally2.so$' /etc/pam.d/system-auth-ac`" ];then echo 'Passed';else echo 'Failure';fi
+- name: Check incorrect password retry [systemauth_pam_tally] config for /etc/pam.d/system-auth
+  shell: if [ -n "`grep -E '^account[[:space:]]+required[[:space:]]+ pam_tally2.so$' /etc/pam.d/system-auth`" ];then echo 'Passed';else echo 'Failure';fi
   changed_when: False
   register: passwordauth_pam_tally2
 - set_fact:
-    passwordauth_pam_tally2: "{{ passwordauth_pam_tally2 | combine({'expect':'account required pam_tally2.so', 'tag':'restore /etc/pam.d/password-auth-ac config'})}}"
+    passwordauth_pam_tally2: "{{ passwordauth_pam_tally2 | combine({'expect':'account required pam_tally2.so', 'tag':'restore /etc/pam.d/password-auth config'})}}"
 
 - name: Check file permission [PASSWDPERM] of /etc/passwd
   shell: if [ "`stat -c %a /etc/passwd`" == "644" ];then echo 'Passed';else echo 'Failure';fi
