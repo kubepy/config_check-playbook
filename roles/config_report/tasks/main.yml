@@ -1,0 +1,9 @@
+---
+# tasks file for config_report
+
+- name: Export system security configuration check to excel
+  local_action: exportReport
+     hostvars="{{hostvars}}"
+     check_item="{{check_item}}"
+     export_file="{{export_file}}"
+  run_once: true

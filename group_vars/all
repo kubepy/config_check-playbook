@@ -1,0 +1,53 @@
+---
+# defaults file for config_report
+export_file: /tmp/config_check_report.xls
+
+#Checktheitem
+check_item:
+  - serviceStatus_vsftpd
+  - serviceStatus_apmd
+  - serviceStatus_autofs
+  - serviceStatus_avahi_daemon
+  - serviceStatus_bluetooth
+  - serviceStatus_cups
+  - serviceStatus_hidd
+  - serviceStatus_hplip
+  - serviceStatus_innd
+  - serviceStatus_irda
+  - serviceStatus_isdn
+  - serviceStatus_krb5_telnet
+  - serviceStatus_mdmonitor
+  - serviceStatus_netfs
+  - serviceStatus_nfslock
+  - serviceStatus_pcscd
+  - serviceStatus_portmap
+  - serviceStatus_rhnsd
+  - serviceStatus_rpcgssd
+  - serviceStatus_rpcidmapd
+  - serviceStatus_sendmail
+  - serviceStatus_yum_updatesd
+  - serviceStatus_eklogin
+  - serviceStatus_ekrb5_telnet
+  - serviceStatus_gssftp
+  - serviceStatus_klogin
+  - serviceStatus_krb5_telnet
+  - serviceStatus_kshell
+  - serviceStatus_ktalk
+  - serviceStatus_rsync
+  - pam_pw_hist
+  - pam_pw_complex
+  - systemauth_pam_tally1
+  - systemauth_pam_tally2
+  - passwordauth_pam_tally1
+  - passwordauth_pam_tally2
+  - passwd_perm
+  - group_perm
+  - exports_perm
+  - issue_perm
+  - wtmp_perm
+  - services_perm
+  - hostsdeny_perm
+  - securetty_perm
+  - sshd_config_perm
+  - messages_perm
+

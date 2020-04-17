@@ -1,0 +1,324 @@
+---
+# tasks file for config_check
+
+- name: check [vsftpd] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status vsftpd |grep  'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service vsftpd status | grep 'running'`" ]; then  echo 'Failure';else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_vsftpd
+- set_fact:
+    serviceStatus_vsftpd: "{{ serviceStatus_vsftpd | combine({'expect':'Service vsftpd status stop or Not Installed', 'tag':'systemctl stop/disable vsftpd | chkconfig vsftpd off'}) }}"
+
+- name: check [apmd] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status apmd |grep  'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service apmd status | grep 'running'`" ]; then  echo 'Failure';else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_apmd
+- set_fact:
+    serviceStatus_apmd: "{{ serviceStatus_apmd | combine({'expect':'Service apmd status stop or Not Installed', 'tag':'systemctl stop/disable apmd | chkconfig apmd off'})}}"
+
+- name: check [autofs] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status autofs |grep  'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service autofs status | grep 'running'`" ]; then  echo 'Failure';else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_autofs
+- set_fact:
+    serviceStatus_autofs: "{{ serviceStatus_autofs | combine({'expect':'Service autofs status stop or Not Installed', 'tag':'systemctl stop/disable autofs | chkconfig autofs off'})}}"
+
+- name: check [avahi-daemon] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status avahi-daemon |grep  'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service avahi-daemon status | grep 'running'`" ]; then  echo 'Failure';else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_avahi_daemon
+- set_fact:
+    serviceStatus_avahi_daemon: "{{ serviceStatus_avahi_daemon | combine({'expect':'Service avahi-daemon status stop or Not Installed', 'tag':'systemctl stop/disable avahi-daemon | chkconfig avahi-daemon off'})}}"
+
+- name: check [bluetooth] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status bluetooth |grep  'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service bluetooth status | grep 'running'`" ]; then  echo 'Failure';else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_bluetooth
+- set_fact:
+    serviceStatus_bluetooth: "{{ serviceStatus_bluetooth | combine({'expect':'Service bluetooth status stop or Not Installed', 'tag':'systemctl stop/disable bluetooth | chkconfig bluetooth off'})}}"
+
+- name: check [cups] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status cups |grep  'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service cups status | grep 'running'`" ]; then  echo 'Failure';else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_cups
+- set_fact:
+    serviceStatus_cups: "{{ serviceStatus_cups | combine({'expect':'Service cups status stop or Not Installed', 'tag':'systemctl stop/disable cups | chkconfig cups off'})}}"
+
+- name: check [hidd] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status hidd |grep  'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service hidd status | grep 'running'`" ]; then  echo 'Failure';else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_hidd
+- set_fact:
+    serviceStatus_hidd: "{{ serviceStatus_hidd | combine({'expect':'Service hidd status stop or Not Installed', 'tag':'systemctl stop/disable hidd | chkconfig hidd off'})}}"
+
+- name: check [hplip] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status hplip |grep  'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service hplip status | grep 'running'`" ]; then  echo 'Failure';else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_hplip
+- set_fact:
+    serviceStatus_hplip: "{{ serviceStatus_hplip | combine({'expect':'Service hplip status stop or Not Installed', 'tag':'systemctl stop/disable hplip | chkconfig hplip off'})}}"
+
+- name: check [innd] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status innd |grep  'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service innd status | grep 'running'`" ]; then  echo 'Failure';else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_innd
+- set_fact:
+    serviceStatus_innd: "{{ serviceStatus_hplip | combine({'expect':'Service innd status stop or Not Installed', 'tag':'systemctl stop/disable innd | chkconfig innd off'})}}"
+
+- name: check [irda] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status irda |grep  'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service irda status | grep 'running'`" ]; then  echo 'Failure';else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_irda
+- set_fact:
+    serviceStatus_irda: "{{ serviceStatus_irda | combine({'expect':'Service irda status stop or Not Installed', 'tag':'systemctl stop/disable irda | chkconfig irda off'})}}"
+
+- name: check [isdn] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status isdn |grep  'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service isdn status | grep 'running'`" ]; then  echo 'Failure';else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_isdn
+- set_fact:
+    serviceStatus_isdn: "{{ serviceStatus_isdn | combine({'expect':'Service isdn status stop or Not Installed', 'tag':'systemctl stop/disable isdn | chkconfig isdn off'})}}"
+
+- name: check [krb5-telnet] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status krb5-telnet |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service krb5-telnet status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_krb5_telnet
+- set_fact:
+    "serviceStatus_krb5_telnet": "{{ serviceStatus_krb5_telnet | combine({'expect':'Service krb5-telnet status stop or Not Installed', 'tag':'systemctl stop/disable krb5-telnet | chkconfig krb5-telnet off'})}}"
+
+- name: check [mdmonitor] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status mdmonitor |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service mdmonitor status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_mdmonitor
+- set_fact:
+    "serviceStatus_mdmonitor": "{{ serviceStatus_mdmonitor | combine({'expect':'Service mdmonitor status stop or Not Installed', 'tag':'systemctl stop/disable mdmonitor | chkconfig mdmonitor off'})}}"
+
+- name: check [netfs] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status netfs |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service netfs status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_netfs
+- set_fact:
+    "serviceStatus_netfs": "{{ serviceStatus_netfs | combine({'expect':'Service netfs status stop or Not Installed', 'tag':'systemctl stop/disable netfs | chkconfig netfs off'})}}"
+
+- name: check [nfslock] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status nfslock |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service nfslock status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_nfslock
+- set_fact:
+    "serviceStatus_nfslock": "{{ serviceStatus_nfslock | combine({'expect':'Service nfslock status stop or Not Installed', 'tag':'systemctl stop/disable nfslock | chkconfig nfslock off'})}}"
+
+- name: check [pcscd] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status pcscd |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service pcscd status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_pcscd
+- set_fact:
+    "serviceStatus_pcscd": "{{ serviceStatus_pcscd | combine({'expect':'Service pcscd status stop or Not Installed', 'tag':'systemctl stop/disable pcscd | chkconfig pcscd off'})}}"
+
+- name: check [portmap] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status portmap |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service portmap status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_portmap
+- set_fact:
+    "serviceStatus_portmap": "{{ serviceStatus_portmap | combine({'expect':'Service portmap status stop or Not Installed', 'tag':'systemctl stop/disable portmap | chkconfig portmap off'})}}"
+
+- name: check [rhnsd] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status rhnsd |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service portmap status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_rhnsd
+- set_fact:
+    "serviceStatus_rhnsd": "{{ serviceStatus_rhnsd | combine({'expect':'Service rhnsd status stop or Not Installed', 'tag':'systemctl stop/disable rhnsd | chkconfig rhnsd off'})}}"
+
+- name: check [rpcgssd] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status rpcgssd |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service rpcgssd status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_rpcgssd
+- set_fact:
+    "serviceStatus_rpcgssd": "{{ serviceStatus_rpcgssd | combine({'expect':'Service rpcgssd status stop or Not Installed', 'tag':'systemctl stop/disable rpcgssd | chkconfig rpcgssd off'})}}"
+
+- name: check [rpcidmapd] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status rpcidmapd |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service rpcidmapd status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_rpcidmapd
+- set_fact:
+    "serviceStatus_rpcidmapd": "{{ serviceStatus_rpcidmapd | combine({'expect':'Service rpcidmapd status stop or Not Installed', 'tag':'systemctl stop/disable rpcidmapd | chkconfig rpcidmapd off'})}}"
+
+- name: check [sendmail] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status sendmail |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service sendmail status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_sendmail
+- set_fact:
+    "serviceStatus_sendmail": "{{ serviceStatus_sendmail | combine({'expect':'Service sendmail status stop or Not Installed', 'tag':'systemctl stop/disable sendmail | chkconfig sendmail off'})}}"
+
+- name: check [yum-updatesd] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status yum-updatesd |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service yum-updatesd status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_yum_updatesd
+- set_fact:
+    "serviceStatus_yum_updatesd": "{{ serviceStatus_yum_updatesd | combine({'expect':'Service yum-updatesd status stop or Not Installed', 'tag':'systemctl stop/disable yum-updatesd | chkconfig yum-updatesd off'})}}"
+
+- name: check [eklogin] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status eklogin |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service eklogin status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_eklogin
+- set_fact:
+    "serviceStatus_eklogin": "{{ serviceStatus_eklogin | combine({'expect':'Service eklogin status stop or Not Installed', 'tag':'systemctl stop/disable eklogin | chkconfig eklogin off'})}}"
+
+- name: check [ekrb5-telnet] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status ekrb5-telnet |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service ekrb5-telnet status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_ekrb5_telnet
+- set_fact:
+    "serviceStatus_ekrb5_telnet": "{{ serviceStatus_ekrb5_telnet | combine({'expect':'Service ekrb5-telnet status stop or Not Installed', 'tag':'systemctl stop/disable ekrb5-telnet | chkconfig ekrb5-telnet off'})}}"
+
+- name: check [gssftp] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status gssftp |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service gssftp status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_gssftp
+- set_fact:
+    "serviceStatus_gssftp": "{{ serviceStatus_gssftp | combine({'expect':'Service gssftp status stop or Not Installed', 'tag':'systemctl stop/disable gssftp | chkconfig gssftp off'})}}"
+
+- name: check [klogin] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status klogin |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service klogin status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_klogin
+- set_fact:
+    "serviceStatus_klogin": "{{ serviceStatus_klogin | combine({'expect':'Service klogin status stop or Not Installed', 'tag':'systemctl stop/disable klogin | chkconfig klogin off'})}}"
+
+- name: check [krb5-telnet] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status krb5-telnet |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service krb5-telnet status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_krb5_telnet
+- set_fact:
+    "serviceStatus_krb5_telnet": "{{ serviceStatus_krb5_telnet | combine({'expect':'Service krb5-telnet status stop or Not Installed', 'tag':'systemctl stop/disable krb5-telnet | chkconfig krb5-telnet off'})}}"
+
+- name: check [kshell] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status kshell |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service kshell status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_kshell
+- set_fact:
+    "serviceStatus_kshell": "{{ serviceStatus_kshell | combine({'expect':'Service kshell status stop or Not Installed', 'tag':'systemctl stop/disable kshell | chkconfig kshell off'})}}"
+
+- name: check [ktalk] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status ktalk |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service ktalk status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_ktalk
+- set_fact:
+    "serviceStatus_ktalk": "{{ serviceStatus_ktalk | combine({'expect':'Service ktalk status stop or Not Installed', 'tag':'systemctl stop/disable ktalk | chkconfig ktalk off'})}}"
+
+- name: check [rsync] service
+  shell:  if  [ -n "`uname -r|grep el7 &> /dev/null && systemctl status rsync |grep 'Active:'|grep 'running'`" ];then echo "Failure";elif [ -n "`uname -r|grep el6 &> /dev/null && service rsync status | grep 'running'`" ]; then  echo 'Failure'; else echo "Passed";fi
+  changed_when: False
+  register: serviceStatus_rsync
+- set_fact:
+    "serviceStatus_rsync": "{{ serviceStatus_rsync | combine({'expect':'Service rsync status stop or Not Installed', 'tag':'systemctl stop/disable rsync | chkconfig rsync off'})}}"
+
+- name: Check pam_pw_hist [pam_pw_hist] config
+  shell: if [ -n "`uname -r|grep el7 &> /dev/null && grep -E '^password[[:space:]]+required[[:space:]]+pam_pwhistory.so[[:space:]]+use_authtok[[:space:]]+remember=5[[:space:]]+enforce_for_root$' /etc/pam.d/system-auth-ac`" ];then echo 'Passed';elif [ -n "`uname -r|grep el6 &> /dev/null && grep -E '^password[[:space:]]+required[[:space:]]+pam_pwhistory.so[[:space:]]+use_authtok[[:space:]]+remember=5[[:space:]]+enforce_for_root$' /etc/pam.d/system-auth-ac`" ]; then  echo 'Passed'; else echo failed; fi
+  changed_when: False
+  register: pam_pw_hist
+- set_fact:
+    pam_pw_hist : "{{ pam_pw_hist | combine({'expect':'Set password history policy', 'tag':'Set password history policy'})}}"
+
+- name: Check pam_pw_complex [pam_pass_complex] config
+  shell: if [ -n "`uname -r|grep el7 &> /dev/null && grep -E '^password[[:space:]]+requisite[[:space:]]+pam_pwquality.so[[:space:]]+try_first_pass[[:space:]]+local_users_only[[:space:]]+retry=5[[:space:]]+minlen=8[[:space:]]+dcredit=-1[[:space:]]+ucredit=-1[[:space:]]+ocredit=-1[[:space:]]+lcredit=-1[[:space:]]+enforce_for_root[[:space:]]+authtok_type=$' /etc/pam.d/system-auth-ac`" ];then echo 'Passed';elif [ -n "`uname -r|grep el6 &> /dev/null && grep -E '^password[[:space:]]+required[[:space:]]+pam_cracklib.so[[:space:]]+try_first_pass[[:space:]]+retry=5[[:space:]]+minlen=8[[:space:]]+dcredit=-1[[:space:]]+ucredit=-1[[:space:]]+ocredit=-1[[:space:]]+lcredit=-1[[:space:]]+enforce_for_root$' /etc/pam.d/system-auth-ac`" ]; then  echo 'Passed'; else echo failed; fi
+  changed_when: False
+  register: pam_pw_complex
+- set_fact:
+    pam_pw_complex : "{{ pam_pw_complex | combine({'expect':'Set password complex policy', 'tag':'Set password complex policy'})}}"
+
+- name: Check incorrect password retry [systemauth_pam_tally] config for /etc/pam.d/system-auth-ac
+  shell: if [ -n "`grep -E '^auth[[:space:]]+required[[:space:]]+ pam_tally2.so[[:space:]]+onerr=fail[[:space:]]+deny=5[[:space:]]+unlock_time=900[[:space:]]+even_deny_root[[:space:]]+root_unlock_time=900$' /etc/pam.d/system-auth-ac`" ];then echo 'Passed';else echo 'Failure';fi
+  changed_when: False
+  register: systemauth_pam_tally1
+- set_fact:
+    systemauth_pam_tally1: "{{ systemauth_pam_tally1 | combine({'expect':'auth required pam_tally2.so onerr=fail deny=5 unlock_time=900 even_deny_root root_unlock_time=900', 'tag':'restore /etc/pam.d/system-auth-ac config'})}}"
+
+- name: Check incorrect password retry [systemauth_pam_tally] config for /etc/pam.d/system-auth-ac
+  shell: if [ -n "`grep -E '^account[[:space:]]+required[[:space:]]+ pam_tally2.so$' /etc/pam.d/system-auth-ac`" ];then echo 'Passed';else echo 'Failure';fi
+  changed_when: False
+  register: systemauth_pam_tally2
+- set_fact:
+    systemauth_pam_tally2: "{{ systemauth_pam_tally2 | combine({'expect':'account required pam_tally2.so', 'tag':'restore /etc/pam.d/system-auth-ac config'})}}"
+
+- name: Check incorrect password retry [passwordauth_pam_tally] config for /etc/pam.d/password-auth-ac
+  shell: if [ -n "`grep -E '^auth[[:space:]]+required[[:space:]]+ pam_tally2.so[[:space:]]+onerr=fail[[:space:]]+deny=5[[:space:]]+unlock_time=900[[:space:]]+even_deny_root[[:space:]]+root_unlock_time=900$' /etc/pam.d/password-auth-ac`" ];then echo 'Passed';else echo 'Failure';fi
+  changed_when: False
+  register: passwordauth_pam_tally1
+- set_fact:
+    passwordauth_pam_tally1: "{{ passwordauth_pam_tally1 | combine({'expect':'auth required pam_tally2.so onerr=fail deny=5 unlock_time=900 even_deny_root root_unlock_time=900', 'tag':'restore /etc/pam.d/password-auth-ac config'})}}"
+
+- name: Check incorrect password retry [systemauth_pam_tally] config for /etc/pam.d/system-auth-ac
+  shell: if [ -n "`grep -E '^account[[:space:]]+required[[:space:]]+ pam_tally2.so$' /etc/pam.d/system-auth-ac`" ];then echo 'Passed';else echo 'Failure';fi
+  changed_when: False
+  register: passwordauth_pam_tally2
+- set_fact:
+    passwordauth_pam_tally2: "{{ passwordauth_pam_tally2 | combine({'expect':'account required pam_tally2.so', 'tag':'restore /etc/pam.d/password-auth-ac config'})}}"
+
+- name: Check file permission [PASSWDPERM] of /etc/passwd
+  shell: if [ "`stat -c %a /etc/passwd`" == "644" ];then echo 'Passed';else echo 'Failure';fi
+  changed_when: False
+  register: passwd_perm
+- set_fact:
+    passwd_perm: "{{ passwd_perm | combine({'expect':'/etc/passwd permission is 644', 'tag':'chmod 644 /etc/passwd'})}}"
+
+- name: Check file permission [GROUPPERM] of /etc/group
+  shell: if [ "`stat -c %a /etc/group`" == "644" ];then echo 'Passed';else echo 'Failure';fi
+  changed_when: False
+  register: group_perm
+- set_fact:
+    group_perm: "{{ group_perm | combine({'expect':'/etc/group permission is 644', 'tag':'chmod 644 /etc/group'})}}"
+
+- name: Check file permission [EXPORTSPERM] of /etc/exports
+  shell: if [ "`stat -c %a /etc/exports`" == "644" ];then echo 'Passed';else echo 'Failure';fi
+  changed_when: False
+  register: exports_perm
+- set_fact:
+    exports_perm: "{{ exports_perm | combine({'expect':'/etc/exports permission is 644', 'tag':'chmod 644 /etc/exports'})}}"
+
+- name: Check file permission [ISSUESPERM] of /etc/issue
+  shell: if [ "`stat -c %a /etc/issue`" == "644" ];then echo 'Passed';else echo 'Failure';fi
+  changed_when: False
+  register: issue_perm
+- set_fact:
+    issue_perm: "{{ issue_perm | combine({'expect':'/etc/issue permission is 644', 'tag':'chmod 644 /etc/issue'})}}"
+
+- name: Check file permission [WTMPPERM] of /var/log/wtmp
+  shell: if [ "`stat -c %a /var/log/wtmp`" == "644" ];then echo 'Passed';else echo 'Failure';fi
+  changed_when: False
+  register: wtmp_perm
+- set_fact:
+    wtmp_perm: "{{ wtmp_perm | combine({'expect':'/var/log/wtmp permission is 644', 'tag':'chmod 644 /var/log/wtmp'})}}"
+
+- name: Check file permission [SERVICESPERM] of /etc/services
+  shell: if [ "`stat -c %a /etc/services`" == "644" ];then echo 'Passed';else echo 'Failure';fi
+  changed_when: False
+  register: services_perm
+- set_fact:
+    services_perm: "{{ services_perm | combine({'expect':'/etc/services permission is 644', 'tag':'chmod 644 /etc/services'})}}"
+
+- name: Check file permission [HOSTSDENYPERM] of /etc/hosts.deny
+  shell: if [ "`stat -c %a /etc/hosts.deny`" == "644" ];then echo 'Passed';else echo 'Failure';fi
+  changed_when: False
+  register: hostsdeny_perm
+- set_fact:
+    hostsdeny_perm: "{{ hostsdeny_perm | combine({'expect':'/etc/hosts.deny permission is 644', 'tag':'chmod 644 /etc/hosts.deny'})}}"
+
+- name: Check file permission [SECURETTYPERM] of /etc/securetty
+  shell: if [ "`stat -c %a /etc/securetty`" == "600" ];then echo 'Passed';else echo 'Failure';fi
+  changed_when: False
+  register: securetty_perm
+- set_fact:
+    securetty_perm: "{{ securetty_perm | combine({'expect':'/etc/securetty permission is 600', 'tag':'chmod 600 /etc/securetty'})}}"
+
+- name: Check file permission [SSHD_CONFIGPERM] of /etc/ssh/sshd_config
+  shell: if [ "`stat -c %a /etc/ssh/sshd_config`" == "600" ];then echo 'Passed';else echo 'Failure';fi
+  changed_when: False
+  register: sshd_config_perm
+- set_fact:
+    sshd_config_perm: "{{ sshd_config_perm | combine({'expect':'/etc/ssh/sshd_config permission is 600', 'tag':'chmod 600 /etc/ssh/sshd_config'})}}"
+
+- name: Check file permission [MESSAGESPERM] of /var/log/messages
+  shell: if [ "`stat -c %a /var/log/messages`" == "600" ];then echo 'Passed';else echo 'Failure';fi
+  changed_when: False
+  register: messages_perm
+- set_fact:
+    messages_perm: "{{ messages_perm | combine({'expect':'/var/log/messages permission is 600', 'tag':'chmod 600 /var/log/messages'})}}"
